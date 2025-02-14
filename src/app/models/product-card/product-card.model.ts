@@ -1,5 +1,7 @@
 export interface ProductCardModel {
   title: string;
   description: string;
-  imgSrc: string;
+  type: string;
+  price: number;
+  imgSrc?: string;
 }

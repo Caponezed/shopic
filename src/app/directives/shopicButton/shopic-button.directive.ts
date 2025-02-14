@@ -9,7 +9,8 @@ export class ShopicButtonDirective implements OnInit {
   ngOnInit(): void {
     this.host.nativeElement.classList.add(
       'btn',
-      'btn-primary'
+      'btn-primary',
+      'w-100'
     )
   }
 }
