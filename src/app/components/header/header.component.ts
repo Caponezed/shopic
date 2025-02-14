@@ -9,6 +9,14 @@ import { Component, Input } from '@angular/core';
         <img class="logo" src="logo.svg">
         <h4 class="m-0 fw-bold">{{ appTitle }}</h4>
       </div>
+
+      <nav>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item">
+            <a href="/home">Главная</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   `,
   styleUrl: './header.component.css'

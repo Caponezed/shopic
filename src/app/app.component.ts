@@ -6,7 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],
   template: `
-    <app-header appTitle="Shopic"/>
+    <app-header appTitle="Shopic" />
     <router-outlet></router-outlet>
   `,
   styleUrl: './app.component.scss'
