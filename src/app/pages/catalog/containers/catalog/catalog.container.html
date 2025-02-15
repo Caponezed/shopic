@@ -1,0 +1,55 @@
+<h1 class="text-center mb-4">Каталог товаров</h1>
+
+<div class="d-flex gap-3">
+  <div class="d-flex flex-column gap-1">
+    <h4>Фильтры</h4>
+    <details open>
+      <summary>Тип товара</summary>
+      <div>
+        <select class="form-select" [(ngModel)]="productFilters.type">
+          <option value="" selected>Все</option>
+          @for (productType of productTypes; track productType) {
+          <option [value]="productType">{{ productType }}</option>
+          }
+        </select>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Ценовой диапозон</summary>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">От</span>
+        <input
+          class="form-control"
+          type="number"
+          [min]="productFilters.startPrice"
+          [max]="productFilters.endPrice"
+          [step]="100"
+          [(ngModel)]="productFilters.startPrice"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">До</span>
+        <input
+          class="form-control"
+          type="number"
+          [min]="productFilters.startPrice"
+          [max]="MAX_PRICE"
+          [step]="100"
+          [(ngModel)]="productFilters.endPrice"
+        />
+      </div>
+    </details>
+
+    <button appShopicButton (click)="applyFilters()">Применить фильтры</button>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @for (product of filteredProducts; track $index) {
+    <div class="col">
+      <app-product-card [product]="product" />
+    </div>
+    }
+  </div>
+</div>
