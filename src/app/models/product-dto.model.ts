@@ -1,5 +1,6 @@
-export interface ProductCardModel {
-  title: string;
+export interface ProductDto {
+  id: number;
+  name: string;
   description: string;
   type: string;
   price: number;

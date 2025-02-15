@@ -1,4 +1,4 @@
-export interface CatalogFiltersModel {
+export interface CatalogFilters {
   type: string;
   startPrice: number;
   endPrice: number;
