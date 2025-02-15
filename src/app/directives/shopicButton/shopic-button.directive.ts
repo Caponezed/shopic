@@ -4,7 +4,7 @@ import { Directive, ElementRef, inject, OnInit } from '@angular/core';
   selector: '[appShopicButton]',
 })
 export class ShopicButtonDirective implements OnInit {
-  host: ElementRef<HTMLButtonElement> = inject(ElementRef);
+  host: ElementRef<HTMLElement> = inject(ElementRef);
 
   ngOnInit(): void {
     this.host.nativeElement.classList.add(
