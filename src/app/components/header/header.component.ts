@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   template: `
     <div class="header">
       <div class="d-flex align-items-center gap-1">
@@ -13,7 +14,10 @@ import { Component, Input } from '@angular/core';
       <nav>
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item">
-            <a href="/home">Главная</a>
+            <a routerLink="/home" routerLinkActive="link-success">Главная</a>
+          </li>
+          <li class="list-group-item">
+            <a routerLink="/catalog" routerLinkActive="link-success">Каталог</a>
           </li>
         </ul>
       </nav>
