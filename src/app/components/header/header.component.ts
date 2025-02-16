@@ -19,6 +19,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           <li class="list-group-item">
             <a routerLink="/catalog" routerLinkActive="link-success">Каталог</a>
           </li>
+          <li class="list-group-item">
+            <a routerLink="/admin" routerLinkActive="link-success">Админка</a>
+          </li>
         </ul>
       </nav>
     </div>
