@@ -1,0 +1,73 @@
+<div class="dialog-wrapper">
+  <h4 class="fw-bold mb-4">
+    {{ product.id ? "Редактировать" : "Добавить новый" }} товар
+  </h4>
+  <div class="d-flex gap-2 flex-column">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">🖼️</span>
+      <input class="form-control" type="file" />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Наименование</span>
+      <input
+        class="form-control"
+        placeholder="Зеркальная камера"
+        [maxlength]="255"
+        [(ngModel)]="product.name"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Описание</span>
+      <input
+        class="form-control"
+        placeholder="Крутой фотик"
+        [maxlength]="255"
+        [(ngModel)]="product.description"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Тип</span>
+      <input
+        class="form-control"
+        placeholder="Фотокамера"
+        [maxlength]="255"
+        [(ngModel)]="product.productType.name"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Цена</span>
+      <input
+        class="form-control"
+        type="number"
+        [min]="1"
+        placeholder="90000"
+        [(ngModel)]="product.price"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Количество</span>
+      <input
+        class="form-control"
+        type="number"
+        [min]="1"
+        placeholder="150"
+        [(ngModel)]="product.totalQuantity"
+      />
+    </div>
+
+    <button
+      class="btn w-100"
+      [class.btn-warning]="product.id"
+      [class.btn-primary]="!product.id"
+      [disabled]="!productIsValid"
+      (click)="product.id ? updateProduct() : addNewProuduct()"
+    >
+      {{ product.id ? "Редактировать" : "Добавить" }}
+    </button>
+  </div>
+</div>
