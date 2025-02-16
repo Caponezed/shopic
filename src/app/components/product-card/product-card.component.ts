@@ -19,7 +19,7 @@ export class ProductCardComponent {
     productType: {
       name: "Тип товара"
     },
-    imgSrc: 'image-placeholder.jpg',
+    imgSrc: '',
     totalQuantity: 0
   };
 

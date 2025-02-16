@@ -1,7 +1,10 @@
 <!-- Основная информация о товаре -->
 <div class="row">
   <div class="col-md-6">
-    <img class="img-fluid rounded" [src]="product.imgSrc" />
+    <img
+      class="img-fluid rounded"
+      [src]="product.imgSrc || 'image-placeholder.jpg'"
+    />
   </div>
   <div class="col-md-6">
     <h1>{{ product.name }}</h1>
@@ -22,7 +25,5 @@
 <!-- Описание товара -->
 <div class="mt-5">
   <h2>Описание</h2>
-  <p>
-    {{ product.description }}
-  </p>
+  <p>{{ product.description }}</p>
 </div>
