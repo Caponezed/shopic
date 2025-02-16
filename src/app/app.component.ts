@@ -7,7 +7,9 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [RouterOutlet, HeaderComponent],
   template: `
     <app-header appTitle="Shopic" />
-    <router-outlet></router-outlet>
+    <div class="container my-5">
+      <router-outlet></router-outlet>
+    </div>
   `,
   styleUrl: './app.component.scss'
 })
