@@ -5,7 +5,7 @@
   </div>
   <div class="col-md-6">
     <h1>{{ product.name }}</h1>
-    <p class="text-muted">{{ product.description }}</p>
+    <p class="text-muted">Тип товара: {{ product.productType.name }}</p>
     <h2 class="text-primary">
       {{ product.price | currency : "₽" : "symbol" : "1.0-2" }}
     </h2>
