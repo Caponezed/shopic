@@ -20,6 +20,7 @@ export class ProductCardComponent {
       name: "Тип товара"
     },
     imgSrc: 'image-placeholder.jpg',
+    totalQuantity: 0
   };
 
   @Output() clickEmitter = new EventEmitter<void>();

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
@@ -16,7 +16,6 @@ export class ProductContainer implements OnInit {
   activatedRoute = inject(ActivatedRoute);
 
   product: Product = {
-    id: 0,
     name: 'Товар 1',
     description: 'Описание 1',
     imgSrc: 'image-placeholder.jpg',
@@ -24,6 +23,7 @@ export class ProductContainer implements OnInit {
       name: "Тип 1"
     },
     price: 0,
+    totalQuantity: 0
   };
 
   ngOnInit(): void {
