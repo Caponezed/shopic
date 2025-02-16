@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <!-- Сайдбар -->
+  <div class="d-flex gap-2">
+    <button
+      class="btn btn-outline-primary w-100"
+      [class.active]="activeManagementTable === 'products'"
+      (click)="activeManagementTable='products'"
+    >
+      Товары
+    </button>
+    <button
+      class="btn btn-outline-primary w-100"
+      [class.active]="activeManagementTable === 'users'"
+      (click)="activeManagementTable='users'"
+    >
+      Пользователи
+    </button>
+  </div>
+
+  @switch (activeManagementTable) { @case ('products') {
+  <app-products-management-table
+    [products]="products"
+    (openAddNewProductDialogEmitter)="openProductDialog()"
+    (openUpdateProductDialogEmitter)="openProductDialog($event)"
+    (deleteProductByIdEmitter)="deleteProductById($event)"
+  />
+  } @case ('users') {
+  <app-users-management-table />
+  } }
+</div>
