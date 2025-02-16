@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductCardComponent } from '../../../../components/product-card/product-card.component';
-import { ProductDto } from '../../../../models/product-dto.model';
+import { Product } from '../../../../models/product.model';
 import { FormsModule } from '@angular/forms';
 import { CatalogFilters } from '../../models/catalog-filters/catalog-filters.model';
 import { ShopicButtonDirective } from '../../../../directives/shopicButton/shopic-button.directive';
+import { ProductsService } from '../../../../services/products.service';
+import { take } from 'rxjs/internal/operators/take';
 
 @Component({
   selector: 'app-catalog',
@@ -12,35 +14,47 @@ import { ShopicButtonDirective } from '../../../../directives/shopicButton/shopi
   styleUrl: './catalog.container.css'
 })
 export class CatalogContainer implements OnInit {
-  products: ProductDto[] = [];
-  filteredProducts: ProductDto[] = [];
+  private readonly productsService = inject(ProductsService);
+
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   productTypes = new Set<string>();
   MAX_PRICE: number = 0;
   productFilters: CatalogFilters = {
-    type: '',
+    productTypeName: '',
     startPrice: 0,
-    endPrice: Number.POSITIVE_INFINITY
+    endPrice: 0
   };
 
   ngOnInit(): void {
-    this.products = [];
+    this.getAllProducts();
+  }
 
-    this.filteredProducts = this.products.slice();
+  getAllProducts() {
+    this.productsService.getAllProducts()
+      .pipe(
+        take(1)
+      )
+      .subscribe(products => {
+        this.products = products;
 
-    const prices: number[] = [];
-    this.products.map(p => {
-      this.productTypes.add(p.type);
-      prices.push(p.price);
-    });
+        this.filteredProducts = this.products.slice();
 
-    this.MAX_PRICE = Math.max(...prices);
-    this.productFilters.endPrice = this.MAX_PRICE;
+        const prices: number[] = [];
+        this.products.map(p => {
+          this.productTypes.add(p.productType.name);
+          prices.push(p.price);
+        });
+
+        this.MAX_PRICE = Math.max(...prices);
+        this.productFilters.endPrice = this.MAX_PRICE;
+      });
   }
 
   applyFilters() {
     this.filteredProducts = this.products.filter(
       product =>
-        (this.productFilters.type.length > 0 ? product.type === this.productFilters.type : true) &&
+        (this.productFilters.productTypeName.length > 0 ? product.productType.name === this.productFilters.productTypeName : true) &&
         product.price >= this.productFilters.startPrice &&
         product.price <= this.productFilters.endPrice
     );

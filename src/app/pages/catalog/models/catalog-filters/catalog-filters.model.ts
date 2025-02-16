@@ -1,5 +1,5 @@
 export interface CatalogFilters {
-  type: string;
+  productTypeName: string;
   startPrice: number;
   endPrice: number;
 }

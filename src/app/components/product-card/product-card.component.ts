@@ -1,28 +1,26 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ShopicButtonDirective } from '../../directives/shopicButton/shopic-button.directive';
-import { ProductCardModel } from '../../models/product-card/product-card.model';
+import { Product } from '../../models/product.model';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
-  imports: [ShopicButtonDirective, CurrencyPipe],
+  imports: [ShopicButtonDirective, CurrencyPipe, RouterLink],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
-  @Input() product: ProductCardModel = {
-    title: 'Заголовок',
+  @Input() product: Product = {
+    name: 'Заголовок',
     description: 'Описание товара',
     price: 0,
-    type: 'Тип товара',
-    imgSrc: 'image-placeholder.jpg'
+    productType: {
+      name: "Тип товара"
+    },
+    imgSrc: 'image-placeholder.jpg',
   };
-  @Input() buttonText: string = 'Открыть товар';
 
   @Output() clickEmitter = new EventEmitter<void>();
-
-  action() {
-    this.clickEmitter.emit();
-  }
 }

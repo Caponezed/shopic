@@ -6,7 +6,10 @@
     <details open>
       <summary>Тип товара</summary>
       <div>
-        <select class="form-select" [(ngModel)]="productFilters.type">
+        <select
+          class="form-select"
+          [(ngModel)]="productFilters.productTypeName"
+        >
           <option value="" selected>Все</option>
           @for (productType of productTypes; track productType) {
           <option [value]="productType">{{ productType }}</option>
