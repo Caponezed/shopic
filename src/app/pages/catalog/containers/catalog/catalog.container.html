@@ -48,11 +48,11 @@
     <button appShopicButton (click)="applyFilters()">Применить фильтры</button>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <div class="d-flex flex-wrap justify-content-center gap-2 w-100">
     @for (product of filteredProducts; track $index) {
-    <div class="col">
-      <app-product-card [product]="product" />
-    </div>
+    <app-product-card [product]="product" />
+    } @empty {
+    <p class="text-center text-warning fs-4">Товары не найдены :(</p>
     }
   </div>
 </div>
