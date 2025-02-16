@@ -46,7 +46,7 @@ export class CatalogContainer implements OnInit {
           prices.push(p.price);
         });
 
-        this.MAX_PRICE = Math.max(...prices);
+        if (prices.length > 0) this.MAX_PRICE = Math.max(...prices);
         this.productFilters.endPrice = this.MAX_PRICE;
       });
   }
