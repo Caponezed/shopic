@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 
@@ -15,5 +15,17 @@ export class ProductsService {
 
   getProductById(productId: number) {
     return this.httpClient.get<Product>(`${this.apiUrl}/products/${productId}`);
+  }
+
+  addNewProduct(product: Product) {
+    return this.httpClient.post<Product>(`${this.apiUrl}/products`, product);
+  }
+
+  updateProduct(product: Product) {
+    return this.httpClient.put<Product>(`${this.apiUrl}/products`, product);
+  }
+
+  deleteProductById(productId: number) {
+    return this.httpClient.delete<void>(`${this.apiUrl}/products/${productId}`);
   }
 }
