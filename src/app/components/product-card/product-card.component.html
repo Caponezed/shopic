@@ -1,8 +1,16 @@
 <div class="card shadow-sm" style="width: 18rem; height: 50ch">
-  <img class="card-img-top" [src]="product.imgSrc || 'image-placeholder.jpg'" />
+  <img
+    class="card-img-top"
+    [ngSrc]="product.imgSrc || 'image-placeholder.jpg'"
+    width="350"
+    height="350"
+    priority
+  />
   <div class="card-body d-flex flex-column justify-content-between gap-1">
     <h5 class="card-title">{{ product.name }}</h5>
-    <p class="card-text">{{ product.description }}</p>
+    <p class="card-text overflow-auto" style="height: 10ch">
+      {{ product.description }}
+    </p>
     <p class="fs-4 fw-bold">
       {{ product.price | currency : "₽" : "symbol" : "1.0-2" }}
     </p>
