@@ -6,6 +6,8 @@ import { ProductsManagementTableComponent } from '../../products-management-tabl
 import { UsersManagementTableComponent } from '../../users-management-table/users-management-table.component';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ProductDialogComponent } from '../../products-management-table/components/product-dialog/product-dialog.component';
+import { FilesService } from '../../../../services/files.service';
+import { UploadingFile } from '../../../../models/uploading-file.model';
 
 @Component({
   selector: 'app-admin-panel',
@@ -16,6 +18,7 @@ import { ProductDialogComponent } from '../../products-management-table/componen
 export class AdminPanelContainer implements OnInit {
   productsService = inject(ProductsService);
   dialogService = inject(Dialog);
+  filesService = inject(FilesService);
 
   products: Product[] = [];
   activeManagementTable: string = 'products';
@@ -32,6 +35,9 @@ export class AdminPanelContainer implements OnInit {
 
     dialog.componentInstance?.updateProductEmitter
       .subscribe(product => this.updateProduct(product));
+
+    dialog.componentInstance?.uploadImageEmitter
+      .subscribe(uploadingFile => this.uploadImage(uploadingFile));
   }
 
   getAllProducts() {
@@ -67,5 +73,11 @@ export class AdminPanelContainer implements OnInit {
         alert(`Товар с наименованием "${product.name}" был успешно удалён`);
       }
       );
+  }
+
+  uploadImage(image: UploadingFile) {
+    this.filesService.uploadFile(image.formData)
+      .pipe(take(1))
+      .subscribe((stringResponse) => alert(stringResponse));
   }
 }
