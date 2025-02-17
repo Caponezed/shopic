@@ -13,7 +13,12 @@ export class UtilsService {
 
     const file: File = input.files![0];
     const formData: FormData = new FormData();
-    formData.append(name, file, file.name);
+
+    const now = Date.now();
+    const [fileName, fileExtension] = file.name.split('.');
+    const uniqueFileName = `${fileName}_${now}.${fileExtension}`
+
+    formData.append(name, file, uniqueFileName);
 
     uploadingFile.formData = formData;
     uploadingFile.file = file;
