@@ -3,7 +3,7 @@
   <div class="col-md-6">
     <img
       class="img-fluid rounded"
-      [src]="product.imgSrc || 'image-placeholder.jpg'"
+      [src]="product.imgSrc ? (filesApiEndpoint + product.imgSrc) : 'image-placeholder.jpg'"
     />
   </div>
   <div class="col-md-6">

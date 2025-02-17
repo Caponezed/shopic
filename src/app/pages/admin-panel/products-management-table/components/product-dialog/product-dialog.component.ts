@@ -4,11 +4,10 @@ import { Product } from '../../../../../models/product.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { UtilsService } from '../../../../../services/utils.service';
 import { UploadingFile } from '../../../../../models/uploading-file.model';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-dialog',
-  imports: [FormsModule, JsonPipe],
+  imports: [FormsModule],
   templateUrl: './product-dialog.component.html',
   styleUrl: './product-dialog.component.css'
 })
@@ -42,7 +41,7 @@ export class ProductDialogComponent {
       this.product.price > 0 &&
       this.product.productType.name.length > 3 &&
       this.product.totalQuantity > 0 &&
-      (!this.product.id ? !this.product.imgSrc : true);
+      (!this.product.id ? !!this.product.imgSrc : true);
   }
 
   addNewProuduct() {
