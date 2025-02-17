@@ -3,10 +3,23 @@
     {{ product.id ? "Редактировать" : "Добавить новый" }} товар
   </h4>
   <div class="d-flex gap-2 flex-column">
-    <div class="input-group mb-3">
+    <div class="input-group">
       <span class="input-group-text" id="basic-addon1">🖼️</span>
-      <input class="form-control" type="file" />
+      <input
+        class="form-control"
+        type="file"
+        accept="image/*"
+        (change)="utilsService.selectUploadingFile($event, 'file', imageFile)"
+      />
     </div>
+
+    <button
+      class="btn btn-primary w-100 mb-3"
+      [disabled]="imageFile.file.size === 0"
+      (click)="uploadImageProduct()"
+    >
+      Загрузить фото
+    </button>
 
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">Наименование</span>
