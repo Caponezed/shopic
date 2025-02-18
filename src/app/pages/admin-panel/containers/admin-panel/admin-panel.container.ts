@@ -49,8 +49,8 @@ export class AdminPanelContainer implements OnInit {
   openUserDialog(user?: User) {
     const dialog = this.dialogService.open(UsersDialogComponent, { data: structuredClone(user) });
 
-    dialog.componentInstance?.addNewUserEmitter
-      .subscribe(user => this.addNewUser(user));
+    dialog.componentInstance?.registerEmitter
+      .subscribe(user => this.register(user));
 
     dialog.componentInstance?.updateUserEmitter
       .subscribe(user => this.updateUser(user));
@@ -61,8 +61,8 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(users => this.users = users);
   }
-  addNewUser(user: User) {
-    this.usersService.addNewUser(user)
+  register(user: User) {
+    this.usersService.register(user)
       .pipe(take(1))
       .subscribe(newUser => {
         this.getAllUsers();

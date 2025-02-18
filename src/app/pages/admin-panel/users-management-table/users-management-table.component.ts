@@ -11,12 +11,12 @@ import { JoinPipe } from '../../../pipes/join.pipe';
 export class UsersManagementTableComponent {
   @Input({ required: true }) users: User[] = [];
 
-  @Output() openAddNewUserDialogEmitter = new EventEmitter<void>();
+  @Output() openRegisterDialogEmitter = new EventEmitter<void>();
   @Output() openUpdateUserDialogEmitter = new EventEmitter<User>();
   @Output() deleteUserByIdEmitter = new EventEmitter<User>();
 
-  openAddNewUserDialog() {
-    this.openAddNewUserDialogEmitter.emit();
+  openRegisterDialog() {
+    this.openRegisterDialogEmitter.emit();
   }
   openUpdateUserDialog(user: User) {
     this.openUpdateUserDialogEmitter.emit(user);

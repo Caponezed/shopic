@@ -13,8 +13,12 @@ export class UsersService {
     return this.httpClient.get<User[]>(`${this.baseUrl}/api/users`);
   }
 
-  addNewUser(user: User) {
-    return this.httpClient.post<User>(`${this.baseUrl}/api/users`, user);
+  register(user: User) {
+    return this.httpClient.post<User>(`${this.baseUrl}/api/users/register`, user);
+  }
+
+  login(user: User) {
+    return this.httpClient.post<User>(`${this.baseUrl}/api/users/login`, user);
   }
 
   updateUser(user: User) {

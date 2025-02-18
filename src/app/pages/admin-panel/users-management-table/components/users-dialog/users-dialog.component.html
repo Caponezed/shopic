@@ -97,7 +97,7 @@
       [class.btn-warning]="user.id"
       [class.btn-primary]="!user.id"
       [disabled]="!userIsValid"
-      (click)="user.id ? updateUser() : addNewUser()"
+      (click)="user.id ? updateUser() : register()"
     >
       {{ user.id ? "Редактировать" : "Добавить" }}
     </button>

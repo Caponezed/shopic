@@ -22,7 +22,7 @@ export class UsersDialogComponent {
     };
   }
 
-  addNewUserEmitter = new EventEmitter<User>();
+  registerEmitter = new EventEmitter<User>();
   updateUserEmitter = new EventEmitter<User>();
 
   get userIsValid(): boolean {
@@ -48,8 +48,8 @@ export class UsersDialogComponent {
     user.roles = user.roles.filter(userRole => userRole.name !== role.name);
   }
 
-  addNewUser() {
-    this.addNewUserEmitter.emit(this.user);
+  register() {
+    this.registerEmitter.emit(this.user);
   }
 
   updateUser() {

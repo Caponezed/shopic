@@ -27,7 +27,7 @@
   } @case ('users') {
   <app-users-management-table
     [users]="users"
-    (openAddNewUserDialogEmitter)="openUserDialog()"
+    (openRegisterDialogEmitter)="openUserDialog()"
     (openUpdateUserDialogEmitter)="openUserDialog($event)"
     (deleteUserByIdEmitter)="deleteUserById($event)"
   />
