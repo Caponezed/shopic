@@ -1,0 +1,105 @@
+<div class="dialog-wrapper">
+  <h4 class="fw-bold mb-4">
+    {{ user.id ? "Редактировать" : "Добавить нового" }} пользователя
+  </h4>
+  <div class="d-flex gap-2 flex-column">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Имя</span>
+      <input
+        class="form-control"
+        placeholder="Иван"
+        [maxlength]="255"
+        [(ngModel)]="user.firstName"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Фамилия</span>
+      <input
+        class="form-control"
+        placeholder="Иванов"
+        [maxlength]="255"
+        [(ngModel)]="user.lastName"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Email</span>
+      <input
+        class="form-control"
+        placeholder="example@mail.ru"
+        [maxlength]="255"
+        [(ngModel)]="user.email"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Пароль</span>
+      <input
+        class="form-control"
+        type="password"
+        placeholder="super_mega_secret"
+        [maxlength]="255"
+        [(ngModel)]="user.password"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Роли</span>
+      <input
+        class="form-control"
+        placeholder="Пользователь"
+        (keydown.enter)="addNewRoleButton.click()"
+        #newRoleInput
+      />
+      <button
+        class="form-control rounded me-1"
+        #addNewRoleButton
+        (click)="addRoleToUser(newRoleInput, user)"
+      >
+        ➕
+      </button>
+
+      @if(user.roles.length > 0) {
+      <div
+        class="d-flex flex-column overflow-auto border rounded"
+        style="max-height: 150px"
+      >
+        @for (role of user.roles; track role.name;) {
+        <div class="input-group">
+          <span
+            class="input-group-text"
+            id="basic-addon1"
+            style="border-radius: 0"
+            >{{ $index + 1 }}</span
+          >
+          <input
+            class="form-control flex-grow-1"
+            style="border-radius: 0"
+            placeholder="Роль"
+            [(ngModel)]="role.name"
+          />
+          <button
+            class="form-control flex-shrink-1"
+            style="border-radius: 0"
+            (click)="deleteUserRole(user, role)"
+          >
+            ❌
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <button
+      class="btn w-100"
+      [class.btn-warning]="user.id"
+      [class.btn-primary]="!user.id"
+      [disabled]="!userIsValid"
+      (click)="user.id ? updateUser() : addNewUser()"
+    >
+      {{ user.id ? "Редактировать" : "Добавить" }}
+    </button>
+  </div>
+</div>
