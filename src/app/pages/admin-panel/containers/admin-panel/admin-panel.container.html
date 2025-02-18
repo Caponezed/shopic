@@ -25,6 +25,11 @@
     (deleteProductByIdEmitter)="deleteProductById($event)"
   />
   } @case ('users') {
-  <app-users-management-table />
+  <app-users-management-table
+    [users]="users"
+    (openAddNewUserDialogEmitter)="openUserDialog()"
+    (openUpdateUserDialogEmitter)="openUserDialog($event)"
+    (deleteUserByIdEmitter)="deleteUserById($event)"
+  />
   } }
 </div>

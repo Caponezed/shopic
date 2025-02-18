@@ -8,6 +8,9 @@ import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ProductDialogComponent } from '../../products-management-table/components/product-dialog/product-dialog.component';
 import { FilesService } from '../../../../services/files.service';
 import { UploadingFile } from '../../../../models/uploading-file.model';
+import { User } from '../../../../models/user.model';
+import { UsersDialogComponent } from '../../users-management-table/components/users-dialog/users-dialog.component';
+import { UsersService } from '../../../../services/users.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -17,14 +20,17 @@ import { UploadingFile } from '../../../../models/uploading-file.model';
 })
 export class AdminPanelContainer implements OnInit {
   productsService = inject(ProductsService);
+  usersService = inject(UsersService);
   dialogService = inject(Dialog);
   filesService = inject(FilesService);
 
   products: Product[] = [];
+  users: User[] = [];
   activeManagementTable: string = 'products';
 
   ngOnInit(): void {
     this.getAllProducts();
+    this.getAllUsers();
   }
 
   openProductDialog(product?: Product) {
@@ -38,6 +44,46 @@ export class AdminPanelContainer implements OnInit {
 
     dialog.componentInstance?.uploadImageEmitter
       .subscribe(uploadingFile => this.uploadImage(uploadingFile));
+  }
+
+  openUserDialog(user?: User) {
+    const dialog = this.dialogService.open(UsersDialogComponent, { data: structuredClone(user) });
+
+    dialog.componentInstance?.addNewUserEmitter
+      .subscribe(user => this.addNewUser(user));
+
+    dialog.componentInstance?.updateUserEmitter
+      .subscribe(user => this.updateUser(user));
+  }
+
+  getAllUsers() {
+    this.usersService.getAllUsers()
+      .pipe(take(1))
+      .subscribe(users => this.users = users);
+  }
+  addNewUser(user: User) {
+    this.usersService.addNewUser(user)
+      .pipe(take(1))
+      .subscribe(newUser => {
+        this.getAllUsers();
+        alert(`Пользователь с email "${newUser.email}" был успешно создан`);
+      });
+  }
+  updateUser(user: User) {
+    this.usersService.updateUser(user)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.getAllUsers();
+        alert(`Пользователь с email "${user.email}" был успешно обновлён`);
+      });
+  }
+  deleteUserById(user: User) {
+    this.usersService.deleteUserById(user.id!)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.getAllUsers();
+        alert(`Пользователь с email "${user.email}" был успешно удалён`);
+      });
   }
 
   getAllProducts() {
