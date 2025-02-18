@@ -8,7 +8,7 @@ import { Product } from '../../../models/product.model';
   styleUrl: './products-management-table.component.css'
 })
 export class ProductsManagementTableComponent {
-  @Input() products: Product[] = [];
+  @Input({ required: true }) products: Product[] = [];
 
   @Output() openAddNewProductDialogEmitter = new EventEmitter<void>();
   @Output() openUpdateProductDialogEmitter = new EventEmitter<Product>();
