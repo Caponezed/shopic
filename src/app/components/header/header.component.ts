@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject, Input } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { UsersService } from '../../services/users.service';
+import { NotificationService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -24,10 +26,30 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           </li>
         </ul>
       </nav>
+
+
+      <button class="btn btn-outline-light" (click)="jwtToken ? logout() : goToLoginPage()">
+        {{ jwtToken ? 'Выйти' : 'Войти' }}
+      </button>
     </div>
   `,
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  public readonly usersService = inject(UsersService);
+  private readonly router = inject(Router);
+  private readonly notificationsService = inject(NotificationService);
+
   @Input({ required: true }) appTitle: string = 'Shopic';
+  @Input({ required: true }) jwtToken: string | null = null;
+
+  logout() {
+    this.usersService.logout();
+    this.goToLoginPage();
+    this.notificationsService.emitNotification('Вы вышли из учётной записи');
+  }
+
+  goToLoginPage() {
+    this.router.navigateByUrl('/login');
+  }
 }

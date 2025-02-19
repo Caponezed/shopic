@@ -11,7 +11,6 @@ export const FILES_API_ENDPOINT = new InjectionToken<string>('FILES_API_ENDPOINT
 
 const JWT_KEY_NAME = 'SHOPIC_JWT_KEY';
 export const JWT_KEY_NAME_TOKEN = new InjectionToken<string>(JWT_KEY_NAME);
-export const JWT_TOKEN = localStorage.getItem(JWT_KEY_NAME);
 
 export const appConfig: ApplicationConfig = {
   providers: [
