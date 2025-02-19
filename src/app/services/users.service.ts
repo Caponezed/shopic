@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BASE_URL, JWT_KEY_NAME_TOKEN } from '../app.config';
 import { User } from '../models/user.model';
 import { LocalStorageService } from './local-storage.service';
+import { LoginResponseDto } from '../models/login-response-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class UsersService {
   }
 
   login(user: User) {
-    return this.httpClient.post(`${this.baseUrl}/api/users/login`, user, { responseType: "text" });
+    return this.httpClient.post<LoginResponseDto>(`${this.baseUrl}/api/users/login`, user);
   }
 
   logout() {

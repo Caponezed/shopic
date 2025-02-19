@@ -33,10 +33,14 @@ export class LoginContainer {
     this.localStorageService.removeItem(this.jwtKeyName);
     this.userService.login(this.user)
       .pipe(take(1))
-      .subscribe(jwtToken => {
-        jwtToken.length > 0 && this.localStorageService.setItem(this.jwtKeyName, jwtToken);
+      .subscribe(loginResponseDto => {
+        loginResponseDto.jwtToken.length > 0 && this.localStorageService.setItem(this.jwtKeyName, loginResponseDto.jwtToken);
         this.router.navigateByUrl('/home');
         this.notificationsService.emitNotification('Успешная аутентификация!');
       })
+  }
+
+  register() {
+
   }
 }
