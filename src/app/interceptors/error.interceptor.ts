@@ -1,22 +1,32 @@
-import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
-import { inject } from "@angular/core";
-import { Router } from "@angular/router";
 import { EMPTY } from "rxjs/internal/observable/empty";
-import { throwError } from "rxjs/internal/observable/throwError";
 import { catchError } from "rxjs/internal/operators/catchError";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { throwError } from "rxjs/internal/observable/throwError";
+import { inject, NgZone } from "@angular/core";
+import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
+import { Router } from "@angular/router";
 
-
-export const errorInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
+export function errorInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
+  const snackBar = inject(MatSnackBar);
   const router = inject(Router);
+  const zone = inject(NgZone);
 
-  return next(request).pipe(
-    catchError((err) => {
-      if ([401, 403].includes(err.status)) {
-        router.navigate(['/login']);
-        return EMPTY;
-      }
+  return next(request).pipe(catchError(err => {
+    if ([401, 403].includes(err.status)) {
+      zone.run(() => {
+        snackBar.open("Произошла ошибка при авторизации", "", { duration: 5000, horizontalPosition: 'right', panelClass: ['notification-warning'] });
+      });
+      router.navigate(['/login']);
+      return EMPTY;
+    };
 
-      return throwError(() => new Error("Ошибка при попытке аутентификации или авторизации"));
-    })
-  );
-};
+    let errorMessage = 'Произошла непредвиденная ошибка при запросе ' + err.url;
+    if (Array.isArray(err.error?.errors)) errorMessage = err.error.errors.join(', ');
+
+    zone.run(() => {
+      snackBar.open(errorMessage, "", { duration: 5000, horizontalPosition: 'right', panelClass: ['notification-warning'] });
+    });
+
+    return throwError(() => err);
+  }));
+}
