@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { BASE_URL } from '../app.config';
+import { inject, Inject, Injectable } from '@angular/core';
+import { BASE_URL, JWT_KEY_NAME_TOKEN } from '../app.config';
 import { User } from '../models/user.model';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  constructor(@Inject(BASE_URL) private baseUrl: string, private readonly httpClient: HttpClient) { }
+  private readonly httpClient = inject(HttpClient);
+  private readonly baseUrl = inject(BASE_URL);
+  private readonly jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
+  private readonly localStorageService = inject(LocalStorageService);
 
   getAllUsers() {
     return this.httpClient.get<User[]>(`${this.baseUrl}/api/users`);
@@ -19,6 +23,10 @@ export class UsersService {
 
   login(user: User) {
     return this.httpClient.post(`${this.baseUrl}/api/users/login`, user, { responseType: "text" });
+  }
+
+  logout() {
+    this.localStorageService.getItem(this.jwtKeyName) && this.localStorageService.removeItem(this.jwtKeyName);
   }
 
   updateUser(user: User) {

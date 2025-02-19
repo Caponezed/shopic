@@ -1,9 +1,9 @@
 import { HttpHandlerFn, HttpRequest } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { JWT_KEY_NAME } from "../app.config";
+import { JWT_KEY_NAME_TOKEN } from "../app.config";
 
 export const authInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn) => {
-  const jwtKeyName = inject(JWT_KEY_NAME);
+  const jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
   const authToken = localStorage.getItem(jwtKeyName);
 
   if (authToken) {
@@ -13,8 +13,6 @@ export const authInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn) 
       }
     });
   }
-
-  console.log(request);
 
   return next(request);
 };

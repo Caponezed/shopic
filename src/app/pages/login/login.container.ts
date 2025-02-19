@@ -1,10 +1,10 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { User } from '../../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { take } from 'rxjs/internal/operators/take';
-import { LocalStorageService } from '../../services/localStorage/local-storage.service';
-import { JWT_KEY_NAME } from '../../app.config';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { JWT_KEY_NAME_TOKEN } from '../../app.config';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import { JWT_KEY_NAME } from '../../app.config';
   styleUrl: './login.container.css'
 })
 export class LoginContainer {
-  jwtKeyName = inject(JWT_KEY_NAME);
+  jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
   userService = inject(UsersService);
   localStorageService = inject(LocalStorageService);
 
@@ -31,7 +31,7 @@ export class LoginContainer {
       .pipe(take(1))
       .subscribe(jwtToken => {
         jwtToken.length > 0 && this.localStorageService.setItem(this.jwtKeyName, jwtToken);
-        debugger;
+        alert(`Успешная аутентификация!`);
       })
   }
 }
