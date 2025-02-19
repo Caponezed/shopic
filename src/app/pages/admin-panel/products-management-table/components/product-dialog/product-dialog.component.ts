@@ -36,10 +36,10 @@ export class ProductDialogComponent {
   uploadImageEmitter = new EventEmitter<UploadingFile>();
 
   get productIsValid(): boolean {
-    return this.product.name.length > 3 &&
-      this.product.description.length > 3 &&
+    return this.product.name.length > 2 &&
+      this.product.description.length > 2 &&
       this.product.price > 0 &&
-      this.product.productType.name.length > 3 &&
+      this.product.productType.name.length > 2 &&
       this.product.totalQuantity > 0 &&
       (!this.product.id ? !!this.product.imgSrc : true);
   }

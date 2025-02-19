@@ -25,9 +25,8 @@ export class AppComponent implements OnInit {
   jwtToken = this.localStorageService.getItem<string | null>(this.jwtKeyName);
 
   ngOnInit(): void {
-    this.notificationsService.notificationEmitter.subscribe(notification => {
+    this.notificationsService.notificationEmitter.subscribe(() => {
       this.jwtToken = this.localStorageService.getItem<string | null>(this.jwtKeyName);
-      alert(notification); // TODO: add snackBar later?
     });
   }
 

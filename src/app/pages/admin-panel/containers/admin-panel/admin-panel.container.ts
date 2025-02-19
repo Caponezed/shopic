@@ -11,6 +11,7 @@ import { UploadingFile } from '../../../../models/uploading-file.model';
 import { User } from '../../../../models/user.model';
 import { UsersDialogComponent } from '../../users-management-table/components/users-dialog/users-dialog.component';
 import { UsersService } from '../../../../services/users.service';
+import { NotificationService } from '../../../../services/notifications.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,10 +20,11 @@ import { UsersService } from '../../../../services/users.service';
   styleUrl: './admin-panel.container.css'
 })
 export class AdminPanelContainer implements OnInit {
-  productsService = inject(ProductsService);
-  usersService = inject(UsersService);
-  dialogService = inject(Dialog);
-  filesService = inject(FilesService);
+  private readonly productsService = inject(ProductsService);
+  private readonly usersService = inject(UsersService);
+  private readonly dialogService = inject(Dialog);
+  private readonly filesService = inject(FilesService);
+  private readonly notificationsService = inject(NotificationService);
 
   products: Product[] = [];
   users: User[] = [];
@@ -66,7 +68,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(newUser => {
         this.getAllUsers();
-        alert(`Пользователь с email "${newUser.email}" был успешно создан`);
+        this.notificationsService.emitNotification(`Пользователь с email "${newUser.email}" был успешно создан`);
       });
   }
   updateUser(user: User) {
@@ -74,7 +76,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(() => {
         this.getAllUsers();
-        alert(`Пользователь с email "${user.email}" был успешно обновлён`);
+        this.notificationsService.emitNotification(`Пользователь с email "${user.email}" был успешно обновлён`);
       });
   }
   deleteUserById(user: User) {
@@ -82,7 +84,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(() => {
         this.getAllUsers();
-        alert(`Пользователь с email "${user.email}" был успешно удалён`);
+        this.notificationsService.emitNotification(`Пользователь с email "${user.email}" был успешно удалён`);
       });
   }
 
@@ -97,7 +99,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe((newProduct) => {
         this.getAllProducts();
-        alert(`Товар с наименованием "${newProduct.name}" был успешно создан`);
+        this.notificationsService.emitNotification(`Товар с наименованием "${newProduct.name}" был успешно создан`);
       }
       );
   }
@@ -107,7 +109,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(product => {
         this.getAllProducts();
-        alert(`Товар с наименованием "${product.name}" был успешно обновлён`);
+        this.notificationsService.emitNotification(`Товар с наименованием "${product.name}" был успешно обновлён`);
       });
   }
 
@@ -116,7 +118,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(() => {
         this.getAllProducts();
-        alert(`Товар с наименованием "${product.name}" был успешно удалён`);
+        this.notificationsService.emitNotification(`Товар с наименованием "${product.name}" был успешно удалён`);
       }
       );
   }
@@ -124,6 +126,6 @@ export class AdminPanelContainer implements OnInit {
   uploadImage(image: UploadingFile) {
     this.filesService.uploadFile(image.formData)
       .pipe(take(1))
-      .subscribe((stringResponse) => alert(stringResponse));
+      .subscribe((stringResponse) => this.notificationsService.emitNotification(stringResponse));
   }
 }
