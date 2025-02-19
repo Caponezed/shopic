@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './interceptors/error.interceptor';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const BASE_URL = new InjectionToken<string>('BASE_URL');
 export const FILES_API_ENDPOINT = new InjectionToken<string>('FILES_API_ENDPOINT');
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     { provide: BASE_URL, useValue: 'http://localhost:8080' },
     { provide: FILES_API_ENDPOINT, useValue: 'http://localhost:8080/api/files/' },
-    { provide: JWT_KEY_NAME_TOKEN, useValue: JWT_KEY_NAME },
+    { provide: JWT_KEY_NAME_TOKEN, useValue: JWT_KEY_NAME }, provideAnimationsAsync(),
   ]
 };
