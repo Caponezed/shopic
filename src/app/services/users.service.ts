@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   login(user: User) {
-    return this.httpClient.post<User>(`${this.baseUrl}/api/users/login`, user);
+    return this.httpClient.post(`${this.baseUrl}/api/users/login`, user, { responseType: "text" });
   }
 
   updateUser(user: User) {
