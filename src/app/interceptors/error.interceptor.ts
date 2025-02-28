@@ -14,7 +14,7 @@ export function errorInterceptor(request: HttpRequest<unknown>, next: HttpHandle
   return next(request).pipe(catchError(err => {
     if ([401, 403].includes(err.status)) {
       zone.run(() => {
-        snackBar.open("Произошла ошибка при авторизации", "", { duration: 5000, horizontalPosition: 'right', panelClass: ['notification-warning'] });
+        snackBar.open("Произошла ошибка при авторизации или нет прав доступа", "", { duration: 5000, horizontalPosition: 'right', panelClass: ['notification-warning'] });
       });
       router.navigate(['/login']);
       return EMPTY;
