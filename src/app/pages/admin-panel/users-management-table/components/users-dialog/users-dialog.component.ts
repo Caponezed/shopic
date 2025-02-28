@@ -1,18 +1,26 @@
 import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component, EventEmitter, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { User } from '../../../../../models/user.model';
 import { UtilsService } from '../../../../../services/utils.service';
 import { FormsModule } from '@angular/forms';
 import { Role } from '../../../../../models/role.model';
+import { JoinPipe } from '../../../../../pipes/join.pipe';
+import { LocalStorageService } from '../../../../../services/local-storage.service';
+import { LOGGED_IN_USER_TOKEN } from '../../../../../app.config';
 
 @Component({
   selector: 'app-users-dialog',
-  imports: [FormsModule],
+  imports: [FormsModule, JoinPipe],
   templateUrl: './users-dialog.component.html',
   styleUrl: './users-dialog.component.css'
 })
-export class UsersDialogComponent {
-  constructor(@Inject(DIALOG_DATA) public user: User, public readonly utilsService: UtilsService) {
+export class UsersDialogComponent implements OnInit {
+  constructor(
+    @Inject(DIALOG_DATA) public user: User,
+    @Inject(LOGGED_IN_USER_TOKEN) private readonly loggedInUserKeyName: string,
+    public readonly utilsService: UtilsService,
+    private readonly localStorageService: LocalStorageService,
+  ) {
     if (!user) this.user = {
       firstName: '',
       lastName: '',
@@ -22,6 +30,20 @@ export class UsersDialogComponent {
         name: 'Пользователь'
       }]
     };
+  }
+
+  currentlyLoggedInUser: User = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    roles: [{
+      name: 'Пользователь'
+    }]
+  };
+
+  ngOnInit() {
+    this.currentlyLoggedInUser = this.localStorageService.getItem(this.loggedInUserKeyName) ?? this.user;
   }
 
   registerEmitter = new EventEmitter<User>();

@@ -44,7 +44,7 @@
       />
     </div>
 
-    @if (user.id) {
+    @if ((currentlyLoggedInUser.roles | join).includes('Администратор')) {
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Роли</span>
         <input

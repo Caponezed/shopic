@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BASE_URL, JWT_KEY_NAME_TOKEN } from '../app.config';
+import { BASE_URL, JWT_KEY_NAME_TOKEN, LOGGED_IN_USER_TOKEN } from '../app.config';
 import { User } from '../models/user.model';
 import { LocalStorageService } from './local-storage.service';
 import { LoginResponseDto } from '../models/login-response-dto.model';
@@ -12,6 +12,7 @@ export class UsersService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseUrl = inject(BASE_URL);
   private readonly jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
+  private readonly loggedInUserKeyName = inject(LOGGED_IN_USER_TOKEN);
   private readonly localStorageService = inject(LocalStorageService);
 
   getAllUsers() {
@@ -28,6 +29,7 @@ export class UsersService {
 
   logout() {
     this.localStorageService.getItem(this.jwtKeyName) && this.localStorageService.removeItem(this.jwtKeyName);
+    this.localStorageService.getItem(this.loggedInUserKeyName) && this.localStorageService.removeItem(this.loggedInUserKeyName);
   }
 
   updateUser(user: User) {

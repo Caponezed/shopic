@@ -13,10 +13,10 @@
       {{ product.price | currency : "₽" : "symbol" : "1.0-2" }}
     </h2>
     <div class="d-grid gap-2 d-md-block mt-4">
+      <h5 class="text-secondary">
+        {{ product.totalQuantity }} шт. на складе
+      </h5>
       <button class="btn btn-primary btn-lg">Добавить в корзину</button>
-      <button class="btn btn-outline-secondary btn-lg">
-        Купить в один клик
-      </button>
     </div>
     <hr />
   </div>

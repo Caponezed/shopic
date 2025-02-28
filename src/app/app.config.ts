@@ -11,7 +11,9 @@ export const BASE_URL = new InjectionToken<string>('BASE_URL');
 export const FILES_API_ENDPOINT = new InjectionToken<string>('FILES_API_ENDPOINT');
 
 const JWT_KEY_NAME = 'SHOPIC_JWT_KEY';
+const LOGGED_IN_USER_KEY_NAME = 'LOGGED_IN_USER';
 export const JWT_KEY_NAME_TOKEN = new InjectionToken<string>(JWT_KEY_NAME);
+export const LOGGED_IN_USER_TOKEN = new InjectionToken<string>(LOGGED_IN_USER_KEY_NAME);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +22,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     { provide: BASE_URL, useValue: 'http://localhost:8080' },
     { provide: FILES_API_ENDPOINT, useValue: 'http://localhost:8080/api/files/' },
-    { provide: JWT_KEY_NAME_TOKEN, useValue: JWT_KEY_NAME }, provideAnimationsAsync(),
+    { provide: JWT_KEY_NAME_TOKEN, useValue: JWT_KEY_NAME },
+    { provide: LOGGED_IN_USER_TOKEN, useValue: LOGGED_IN_USER_KEY_NAME },
+    provideAnimationsAsync(),
   ]
 };

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { take } from 'rxjs/internal/operators/take';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { JWT_KEY_NAME_TOKEN } from '../../app.config';
+import { JWT_KEY_NAME_TOKEN, LOGGED_IN_USER_TOKEN } from '../../app.config';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notifications.service';
 import { Dialog } from '@angular/cdk/dialog';
@@ -17,9 +17,10 @@ import { UsersDialogComponent } from '../admin-panel/users-management-table/comp
   styleUrl: './login.container.css'
 })
 export class LoginContainer {
-  jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
-  userService = inject(UsersService);
-  localStorageService = inject(LocalStorageService);
+  private jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
+  private loggedInUserKeyName = inject(LOGGED_IN_USER_TOKEN);
+  private userService = inject(UsersService);
+  public localStorageService = inject(LocalStorageService);
   private readonly router = inject(Router);
   private readonly notificationsService = inject(NotificationService);
   private readonly usersService = inject(UsersService);
@@ -39,6 +40,7 @@ export class LoginContainer {
       .pipe(take(1))
       .subscribe(loginResponseDto => {
         loginResponseDto.jwtToken.length > 0 && this.localStorageService.setItem(this.jwtKeyName, loginResponseDto.jwtToken);
+        this.loggedInUserKeyName.length > 0 && this.localStorageService.setItem(this.loggedInUserKeyName, loginResponseDto.user);
         this.router.navigateByUrl('/home');
         this.notificationsService.emitNotification('Успешная аутентификация!');
       })
