@@ -63,6 +63,7 @@ export class AdminPanelContainer implements OnInit {
       .pipe(take(1))
       .subscribe(users => this.users = users);
   }
+
   register(user: User) {
     this.usersService.register(user)
       .pipe(take(1))
@@ -71,6 +72,7 @@ export class AdminPanelContainer implements OnInit {
         this.notificationsService.emitNotification(`Пользователь с email "${newUser.email}" был успешно создан`);
       });
   }
+
   updateUser(user: User) {
     this.usersService.updateUser(user)
       .pipe(take(1))

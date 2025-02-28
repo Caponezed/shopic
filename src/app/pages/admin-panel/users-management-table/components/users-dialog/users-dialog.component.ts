@@ -18,7 +18,9 @@ export class UsersDialogComponent {
       lastName: '',
       email: '',
       password: '',
-      roles: []
+      roles: [{
+        name: 'Пользователь'
+      }]
     };
   }
 
@@ -31,7 +33,7 @@ export class UsersDialogComponent {
       this.user.firstName.length > 3 &&
       this.user.lastName.length > 3 &&
       this.user.roles.length > 0 &&
-      this.user.password.length > 5;
+      this.user.password.length > 3;
   }
 
   addRoleToUser(input: HTMLInputElement, user: User) {

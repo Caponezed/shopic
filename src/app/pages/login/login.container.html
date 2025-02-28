@@ -14,7 +14,7 @@
                 placeholder="Введите ваш email"
                 required
                 name="userEmailInput"
-                [(ngModel)]="user.email"
+                [(ngModel)]="loggingUser.email"
               />
             </div>
             <div class="mb-3">
@@ -26,14 +26,14 @@
                 placeholder="Введите ваш пароль"
                 required
                 name="userPasswordInput"
-                [(ngModel)]="user.password"
+                [(ngModel)]="loggingUser.password"
               />
             </div>
 
             <div class="btn-group d-flex" role="group">
               <button
                 class="btn btn-outline-secondary w-100"
-                (click)="register()"
+                (click)="openUserDialog()"
               >
                 Зарегистрироваться
               </button>
