@@ -43,6 +43,7 @@ export class LoginContainer {
         this.loggedInUserKeyName.length > 0 && this.localStorageService.setItem(this.loggedInUserKeyName, loginResponseDto.user);
         this.router.navigateByUrl('/home');
         this.notificationsService.emitNotification('Успешная аутентификация!');
+        this.userService.loggedInUser$.next(loginResponseDto.user);
       })
   }
 

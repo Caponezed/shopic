@@ -31,16 +31,19 @@ import { JoinPipe } from '../../pipes/join.pipe';
           <a routerLink="/admin" routerLinkActive="link-success">Админка</a>
           </li>
           }
-
-          <li class="list-group-item">
+          @if (loggedInUser && loggedInUser.roles.length > 0) {
+            <li class="list-group-item">
             <a routerLink="/cart" routerLinkActive="link-success">Корзина</a>
-          </li>
+            </li>
+          }
         </ul>
       </nav>
 
-      <button class="btn btn-outline-light" (click)="jwtToken ? logout() : goToLoginPage()">
-        {{ jwtToken ? 'Выйти' : 'Войти' }}
+      <button class="btn btn-outline-light" (click)="loggedInUser !== null ? logout() : goToLoginPage()">
+        {{ loggedInUser !== null ? 'Выйти' : 'Войти' }}
       </button>
+
+      @if(loggedInUser !== null) {<span>Привет, {{ loggedInUser.firstName }} {{loggedInUser.lastName}}! 😀 ({{ loggedInUser.roles | join }})</span>}
     </div>
   `,
   styleUrl: './header.component.css'
@@ -58,12 +61,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser = this.localStorageService.getItem(this.loggedInUserKeyName);
+    this.usersService.loggedInUser$.subscribe(loggedInUser => this.loggedInUser = loggedInUser);
   }
 
   logout() {
     this.usersService.logout();
     this.goToLoginPage();
     this.notificationsService.emitNotification('Вы вышли из учётной записи');
+    this.usersService.loggedInUser$.next(null);
   }
 
   goToLoginPage() {

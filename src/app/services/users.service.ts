@@ -4,6 +4,7 @@ import { BASE_URL, JWT_KEY_NAME_TOKEN, LOGGED_IN_USER_TOKEN } from '../app.confi
 import { User } from '../models/user.model';
 import { LocalStorageService } from './local-storage.service';
 import { LoginResponseDto } from '../models/login-response-dto.model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class UsersService {
   private readonly jwtKeyName = inject(JWT_KEY_NAME_TOKEN);
   private readonly loggedInUserKeyName = inject(LOGGED_IN_USER_TOKEN);
   private readonly localStorageService = inject(LocalStorageService);
+
+  public readonly loggedInUser$ = new BehaviorSubject<User | null>(null);
 
   getAllUsers() {
     return this.httpClient.get<User[]>(`${this.baseUrl}/api/users`);

@@ -14,9 +14,18 @@
     </h2>
     <div class="d-grid gap-2 d-md-block mt-4">
       <h5 class="text-secondary">
-        {{ product.totalQuantity }} шт. на складе
+        <span [style.color]="product.totalQuantity > 0 ? 'gray' : 'red'">{{ product.totalQuantity }} шт. на складе</span>
+        @if(cartProduct.quantity > 1) {<span class="text-danger">(-{{cartProduct.quantity}})</span>}
       </h5>
-      <button class="btn btn-primary btn-lg">Добавить в корзину</button>
+
+      <div class="d-flex align-items-center gap-1">
+        <button class="btn btn-outline-primary btn-lg" (click)="cartProduct.quantity = cartProduct.quantity - 1" [disabled]="cartProduct.quantity <= 1">➖</button>
+        <input class="form-control" style="max-width: fit-content;" type="number" [min]="1" [max]="product.totalQuantity" [(ngModel)]="cartProduct.quantity">
+        <button class="btn btn-outline-primary btn-lg" (click)="cartProduct.quantity = cartProduct.quantity + 1" [disabled]="cartProduct.quantity >= product.totalQuantity">➕</button>
+
+        <button class="btn btn-outline-primary  btn-lg" (click)="addToCart(product, cartProduct.quantity)" [disabled]="product.totalQuantity === 0">Добавить в корзину</button>
+        @if(cartProduct.id) {<button class="btn btn-outline-danger btn-lg" (click)="removeFromCart()">Удалить из корзины</button>}
+      </div>
     </div>
     <hr />
   </div>
